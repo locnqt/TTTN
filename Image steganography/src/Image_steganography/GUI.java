@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.SecretKey;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -26,13 +27,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author locnq
+ * @author locnqt
  */
 public class GUI extends javax.swing.JFrame {
 
     private static String sourceFilePath = "";
     private static String fileName = "";
     private Ste s = new Ste();
+    private AES aes = new AES();
 
     /**
      * Creates new form GUI
@@ -61,7 +63,6 @@ public class GUI extends javax.swing.JFrame {
 //    private void showMessage(String message, String title) {
 //        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
 //    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -667,11 +668,11 @@ public class GUI extends javax.swing.JFrame {
         file.setAcceptAllFileFilterUsed(false);
         file.setCurrentDirectory(new File(System.getProperty("user.dir")));
         file.setDialogTitle("Select Image To Encrypt");
-        //filter the files
+        //loc file chi lay dinh dang bmp hoac png
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images (bmp, png)", "bmp", "png");
         file.addChoosableFileFilter(filter);
         int result = file.showSaveDialog(null);
-        //if the user click on save in Jfilechooser
+        //neu nguoi dung nhan nut save tren dialog
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = file.getSelectedFile();
             String path = selectedFile.getAbsolutePath();
@@ -681,12 +682,11 @@ public class GUI extends javax.swing.JFrame {
                 BufferedImage resizedImage = resize(image, LB_origin_img1.getWidth(), LB_origin_img1.getHeight());
                 LB_origin_img1.setIcon(new ImageIcon(resizedImage));
                 TX_input_img.setText(path);
-                LB_origin_img_size1.setText("Size: "+selectedFile.length()/1000+" KB");
+                LB_origin_img_size1.setText("Size: " + selectedFile.length() / 1000 + " KB");
             } catch (IOException ex) {
-//                showMessage(ex.getMessage(), "ERROR!!!");
                 LB_notify1.setText(ex.getMessage());
             }
-        } //if the user click on save in Jfilechooser
+        } //neu nguoi dung nhan nut cancel tren dialog
         else if (result == JFileChooser.CANCEL_OPTION) {
             System.out.println("No File Select");
         }
@@ -697,11 +697,11 @@ public class GUI extends javax.swing.JFrame {
         file.setAcceptAllFileFilterUsed(false);
         file.setCurrentDirectory(new File(System.getProperty("user.dir")));
         file.setDialogTitle("Select Image To Decrypt");
-        //filter the files
+        //loc file chi lay dinh dang bmp hoac png
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images (bmp, png)", "bmp", "png");
         file.addChoosableFileFilter(filter);
         int result = file.showSaveDialog(null);
-        //if the user click on save in Jfilechooser
+        //neu nguoi dung nhan nut save tren dialog
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = file.getSelectedFile();
             String path = selectedFile.getAbsolutePath();
@@ -711,12 +711,12 @@ public class GUI extends javax.swing.JFrame {
                 BufferedImage resizedImage = resize(image, LB_enc_img2.getWidth(), LB_enc_img2.getHeight());
                 LB_enc_img2.setIcon(new ImageIcon(resizedImage));
                 TX_decryp_img.setText(path);
-                LB_enc_img_size2.setText("Size: "+selectedFile.length()/1000+" KB");
+                LB_enc_img_size2.setText("Size: " + selectedFile.length() / 1000 + " KB");
             } catch (IOException ex) {
 //                showMessage(ex.getMessage(), "ERROR!!!");
                 LB_notify2.setText(ex.getMessage());
             }
-        } //if the user click on save in Jfilechooser
+        } //neu nguoi dung nhan nut cancel tren dialog
         else if (result == JFileChooser.CANCEL_OPTION) {
             System.out.println("No File Select");
         }
@@ -727,11 +727,11 @@ public class GUI extends javax.swing.JFrame {
         file.setAcceptAllFileFilterUsed(false);
         file.setCurrentDirectory(new File(System.getProperty("user.dir")));
         file.setDialogTitle("Select Message text To Encrypt");
-        //filter the files
+        //loc file chi lay dinh dang txt
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text (txt)", "txt");
         file.addChoosableFileFilter(filter);
         int result = file.showSaveDialog(null);
-        //if the user click on save in Jfilechooser
+        //neu nguoi dung nhan nut save tren dialog
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = file.getSelectedFile();
             String path = selectedFile.getAbsolutePath();
@@ -745,7 +745,7 @@ public class GUI extends javax.swing.JFrame {
             } catch (Exception e2) {
                 System.out.println(e2);
             }
-        } //if the user click on save in Jfilechooser
+        } //neu nguoi dung nhan nut cancel tren dialog
         else if (result == JFileChooser.CANCEL_OPTION) {
             System.out.println("No File Select");
         }
@@ -770,6 +770,7 @@ public class GUI extends javax.swing.JFrame {
         LB_enc_img1.setIcon(null);
         LB_origin_img_size1.setText("Size: ");
         LB_enc_img_size1.setText("Size: ");
+        sourceFilePath = "";
     }//GEN-LAST:event_Btn_clear1ActionPerformed
 
     private void Btn_clear2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_clear2ActionPerformed
@@ -779,6 +780,7 @@ public class GUI extends javax.swing.JFrame {
         LB_notify2.setText("");
         LB_enc_img_size2.setText("Size: ");
         LB_enc_img2.setIcon(null);
+        sourceFilePath = "";
     }//GEN-LAST:event_Btn_clear2ActionPerformed
 
     private void Btb_save_messActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btb_save_messActionPerformed
@@ -786,12 +788,12 @@ public class GUI extends javax.swing.JFrame {
         JFileChooser file = new JFileChooser();
         file.setAcceptAllFileFilterUsed(false);
         file.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        file.setDialogTitle("Select Message text To Encrypt");
-        //filter the files
+        file.setDialogTitle("Select file to save Message text");
+        //loc file chi lay dinh dang txt
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text (txt)", "txt");
         file.addChoosableFileFilter(filter);
         int result = file.showSaveDialog(null);
-        //if the user click on save in Jfilechooser
+        //neu nguoi dung nhan nut save tren dialog
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = file.getSelectedFile();
             String path = selectedFile.getAbsolutePath();
@@ -810,7 +812,7 @@ public class GUI extends javax.swing.JFrame {
                     System.out.println(e2);
                 }
             }
-        } //if the user click on save in Jfilechooser
+        } //neu nguoi dung nhan nut cancel tren dialog
         else if (result == JFileChooser.CANCEL_OPTION) {
             System.out.println("No File Select");
         }
@@ -822,69 +824,82 @@ public class GUI extends javax.swing.JFrame {
 
     private void Btn_encActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_encActionPerformed
         if (sourceFilePath.equals("")) {
-//            showMessage("No image file selected", "Warning!!!");
             LB_notify1.setText("No image file selected");
             return;
         }
-        //Get secret string that input by user and checking if it's empty
+        //lay thong diep tù nguoi dung
         String secret = TXA_input_mess.getText().trim();
         if (secret.equals("")) {
-//            showMessage("Please input something to hide", "Warning");
             LB_notify1.setText("Please input something to hide");
             return;
         }
-        //Determine the maximum characters for hiding base on image width & height
+        System.out.println("LENG: " + secret.length() * 8 + " bits");
+        //xac dinh toi da cac ky tu co the giau tren anh dua vao chiều rộng và chiều cao của hình ảnh
         try {
             BufferedImage bi = ImageIO.read(new File(sourceFilePath));
             int maxChars = getMaxHiddenChars(bi.getWidth(), bi.getHeight());
-            if (secret.length() > maxChars) {
-//                showMessage("The maximum character to hide is " + maxChars, "Warning!!!");
+            if ((secret.length() * 8) > (maxChars) - 3) {
                 LB_notify1.setText("The maximum character to hide is " + maxChars);
                 return;
+            } else {
+                LB_notify1.setText("");
             }
 
         } catch (IOException ioe) {
-//            showMessage(ioe.getMessage(), "Error");
             LB_notify1.setText(ioe.getMessage());
         }
-        //Select file to save
+        //chon file save
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Specify a file to save");
+        fileChooser.setDialogTitle("Specify a file to save encryted image");
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images (bmp, png)", "bmp", "png");
+        String ext = sourceFilePath.substring(sourceFilePath.lastIndexOf('.') + 1);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images ", ext);
         fileChooser.addChoosableFileFilter(filter);
 
         int userSelection = fileChooser.showSaveDialog(this);
         String destFilePath = "";
+        //neu nguoi dung nhan nut save tren dialog
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             destFilePath = fileToSave.getAbsolutePath();
-            //Using Encode method to hide secret into image
-            if (s.Encode(sourceFilePath, secret, destFilePath)) {
-//                showMessage("The secret was encoding successfully", "Information");
-                LB_notify1.setText("The secret was encoding successfully");
-            }
             try {
-                File newfile;
-                String fileType = sourceFilePath.substring(sourceFilePath.lastIndexOf('.') + 1);
-                if (fileType.equalsIgnoreCase("PNG")) {
-                    newfile = new File(destFilePath+".png");
-                    TX_output_img.setText(destFilePath + ".png");
-                } else {
-                    TX_output_img.setText(destFilePath + ".bmp");
-                    newfile = new File(destFilePath+".bmp");
+                String secKey = aes.getSecretEncryptionKey();
+                SecretKey originalKey = aes.getSecretDecryptionKey(secKey);
+                byte[] cipherText = aes.encryptText(secret, originalKey);
+                TX_input_key.setText(secKey);
+                //encode here
+                if (s.Encode(sourceFilePath, aes.bytesToHex(cipherText), destFilePath)) {
+//                if (s.Encode(sourceFilePath, secret, destFilePath)) {
+                    try {
+                        File newfile;
+                        String fileType = "." + ext;
+                        System.out.println("fileType: " + fileType);
+                        if (!destFilePath.endsWith(fileType)) {
+                            if (destFilePath.indexOf(".") != -1) {
+                                destFilePath = destFilePath.substring(0, destFilePath.lastIndexOf('.'));
+                            }
+                            newfile = new File(destFilePath + fileType);
+                            TX_output_img.setText(destFilePath + fileType);
+                        } else {
+                            newfile = new File(destFilePath);
+                            TX_output_img.setText(destFilePath);
+                        }
+                        // set lai encrypted image 
+                        BufferedImage image = ImageIO.read(newfile);
+                        BufferedImage resizedImage = resize(image, LB_enc_img1.getWidth(), LB_enc_img1.getHeight());
+                        LB_enc_img1.setIcon(new ImageIcon(resizedImage));
+                        LB_enc_img_size1.setText("Size: " + newfile.length() / 1000 + " KB");
+                    } catch (IOException ex) {
+                        LB_notify1.setText(ex.getMessage());
+                    }
+                    LB_notify1.setText("The secret was encoding successfully");
                 }
-                BufferedImage image = ImageIO.read(newfile);
-                BufferedImage resizedImage = resize(image, LB_enc_img1.getWidth(), LB_enc_img1.getHeight());
-                LB_enc_img1.setIcon(new ImageIcon(resizedImage));
-                LB_enc_img_size1.setText("Size: "+newfile.length()/1000+" KB");
-            } catch (IOException ex) {
-//                showMessage(ex.getMessage(), "ERROR!!!");
+            } catch (Exception ex) {
                 LB_notify1.setText(ex.getMessage());
             }
-        }//if the user click on save in Jfilechooser
+        }//neu nguoi dung nhan nut cancel tren dialog
         else if (userSelection == JFileChooser.CANCEL_OPTION) {
             System.out.println("No File Select");
         }
@@ -892,22 +907,33 @@ public class GUI extends javax.swing.JFrame {
 
     private void Btn_decrypActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_decrypActionPerformed
         TXA_decryp_mess.setText("");
-        // TODO add your handling code here:
-        if(sourceFilePath.equals("")) {
-//            showMessage("No File Selected", "Warning!!!");
+        LB_notify2.setText("");
+        if (sourceFilePath.equals("")) {
             LB_notify2.setText("No File Selected");
             return;
         }
-        else{
-            String secret = s.Decode(sourceFilePath);
-            TXA_decryp_mess.setText(secret); //Show secret
-            LB_notify2.setText("The secret was Decoding successfully");
+        else if(TX_decryp_key.getText().equals("")){
+            LB_notify2.setText("Please input key");
         }
-        
+        else {
+            String secKey=TX_decryp_key.getText();
+            String secret = s.Decode(sourceFilePath);
+            byte[] decodedHex = aes.hextoBytes(secret);
+            SecretKey originalKey;
+            try {
+                originalKey = aes.getSecretDecryptionKey(secKey);
+                String decryptedText = aes.decryptText(decodedHex, originalKey);
+                TXA_decryp_mess.setText(decryptedText); 
+                LB_notify2.setText("The secret was Decoding successfully");
+            } catch (Exception ex) {
+                LB_notify1.setText(ex.getMessage());
+            }
+        }
+
     }//GEN-LAST:event_Btn_decrypActionPerformed
     public int getMaxHiddenChars(int width, int height) {
 
-        return ((width * height * 3) / 8) - 1; //*3 RGB, 8bit=1byte
+        return (width * height * 3); //*3 RGB hide in 1 lsb bit
     }
 
     /**

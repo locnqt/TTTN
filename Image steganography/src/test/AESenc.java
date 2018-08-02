@@ -44,7 +44,10 @@ public class AESenc {
         return new SecretKeySpec(keyValue, ALGO);
     }
     public static void main(String[] args) throws Exception {
-        String s ="hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world";
+        Key key = generateKey();
+        Cipher c = Cipher.getInstance(ALGO);
+        c.init(Cipher.ENCRYPT_MODE, key);
+        String s ="hello worldhello worldhello worldhello world";
         System.out.println("enc: "+encrypt(s));
         System.out.println("dec: "+decrypt(encrypt(s)));
     }
