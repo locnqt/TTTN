@@ -37,7 +37,7 @@ public class Ste {
             System.out.println("out file: " + output_path);
 
             String secret_bin = messtobin(secret) + "000000000"; //them 9bit 0 vao cuoi message de danh dau ket thuc
-            while (secret_bin.length() % 3 != 0) { // dam bao moi lan du 3 bit cho RGB
+            while (secret_bin.length() % 9 != 0) { // dam bao moi lan du 3 bit cho RGB
                 secret_bin += "0";
             }
             System.out.println("secret_bin: " + secret_bin);

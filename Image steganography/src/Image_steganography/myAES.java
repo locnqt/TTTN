@@ -25,7 +25,7 @@ public class myAES {
             key = myKey.getBytes("UTF-8");
             sha = MessageDigest.getInstance("SHA-1");
             key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
+            key = Arrays.copyOf(key, 16); //16/24/32 - 128/192/256
             secretKey = new SecretKeySpec(key, "AES");
         }
         catch (NoSuchAlgorithmException e) {

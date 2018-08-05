@@ -5,6 +5,7 @@
  */
 package Image_steganography;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -32,9 +33,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class GUI extends javax.swing.JFrame {
 
     private static String sourceFilePath = "";
+    private static String destFilePath = "";
     private static String fileName = "";
     private Ste s = new Ste();
     private AES aes = new AES();
+    private myAES myaes = new myAES();
 
     /**
      * Creates new form GUI
@@ -48,6 +51,8 @@ public class GUI extends javax.swing.JFrame {
         TX_input_mess.setEditable(false);
         TX_output_img.setEditable(false);
         TX_decryp_img.setEditable(false);
+//        TX_input_key.setEditable(false);
+        TX_decryp_key.setMaximumSize(new Dimension(210,20));
 
     }
 
@@ -684,7 +689,7 @@ public class GUI extends javax.swing.JFrame {
                 TX_input_img.setText(path);
                 LB_origin_img_size1.setText("Size: " + selectedFile.length() / 1000 + " KB");
             } catch (IOException ex) {
-                LB_notify1.setText(ex.getMessage());
+                LB_notify1.setText("<html>"+ex.getMessage()+"<html>");
             }
         } //neu nguoi dung nhan nut cancel tren dialog
         else if (result == JFileChooser.CANCEL_OPTION) {
@@ -705,7 +710,7 @@ public class GUI extends javax.swing.JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = file.getSelectedFile();
             String path = selectedFile.getAbsolutePath();
-            sourceFilePath = path;
+            destFilePath = path;
             try {
                 BufferedImage image = ImageIO.read(selectedFile);
                 BufferedImage resizedImage = resize(image, LB_enc_img2.getWidth(), LB_enc_img2.getHeight());
@@ -714,7 +719,7 @@ public class GUI extends javax.swing.JFrame {
                 LB_enc_img_size2.setText("Size: " + selectedFile.length() / 1000 + " KB");
             } catch (IOException ex) {
 //                showMessage(ex.getMessage(), "ERROR!!!");
-                LB_notify2.setText(ex.getMessage());
+                LB_notify2.setText("<html>"+ex.getMessage()+"<html>");
             }
         } //neu nguoi dung nhan nut cancel tren dialog
         else if (result == JFileChooser.CANCEL_OPTION) {
@@ -780,7 +785,7 @@ public class GUI extends javax.swing.JFrame {
         LB_notify2.setText("");
         LB_enc_img_size2.setText("Size: ");
         LB_enc_img2.setIcon(null);
-        sourceFilePath = "";
+        destFilePath = "";
     }//GEN-LAST:event_Btn_clear2ActionPerformed
 
     private void Btb_save_messActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btb_save_messActionPerformed
@@ -846,7 +851,7 @@ public class GUI extends javax.swing.JFrame {
             }
 
         } catch (IOException ioe) {
-            LB_notify1.setText(ioe.getMessage());
+            LB_notify1.setText("<html>"+ioe.getMessage()+"<html>");
         }
         //chon file save
         JFileChooser fileChooser = new JFileChooser();
@@ -865,14 +870,19 @@ public class GUI extends javax.swing.JFrame {
             File fileToSave = fileChooser.getSelectedFile();
             destFilePath = fileToSave.getAbsolutePath();
             try {
-                String secKey = aes.getSecretEncryptionKey();
-                SecretKey originalKey = aes.getSecretDecryptionKey(secKey);
-                byte[] cipherText = aes.encryptText(secret, originalKey);
-                TX_input_key.setText(secKey);
+                // encrypt 
+//                String secKey = aes.getSecretEncryptionKey();
+//                SecretKey originalKey = aes.getSecretDecryptionKey(secKey);
+//                byte[] cipherText = aes.encryptText(secret, originalKey);
+//                TX_input_key.setText(secKey);
+                String key = TX_input_key.getText();
+                String newmess = myaes.encrypt(secret, key);
+                System.out.println("newmess: "+newmess);
                 //encode here
-                if (s.Encode(sourceFilePath, aes.bytesToHex(cipherText), destFilePath)) {
+                if (s.Encode(sourceFilePath, newmess, destFilePath)) {
+//                if (s.Encode(sourceFilePath, aes.bytesToHex(cipherText), destFilePath)) {
 //                if (s.Encode(sourceFilePath, secret, destFilePath)) {
-                    try {
+//                    try {
                         File newfile;
                         String fileType = "." + ext;
                         System.out.println("fileType: " + fileType);
@@ -891,13 +901,13 @@ public class GUI extends javax.swing.JFrame {
                         BufferedImage resizedImage = resize(image, LB_enc_img1.getWidth(), LB_enc_img1.getHeight());
                         LB_enc_img1.setIcon(new ImageIcon(resizedImage));
                         LB_enc_img_size1.setText("Size: " + newfile.length() / 1000 + " KB");
-                    } catch (IOException ex) {
-                        LB_notify1.setText(ex.getMessage());
-                    }
+//                    } catch (IOException ex) {
+//                        LB_notify1.setText("<html>"+ex.getMessage()+"<html>");
+//                    }
                     LB_notify1.setText("The secret was encoding successfully");
                 }
             } catch (Exception ex) {
-                LB_notify1.setText(ex.getMessage());
+                LB_notify1.setText("<html>"+ex.getMessage()+"<html>");
             }
         }//neu nguoi dung nhan nut cancel tren dialog
         else if (userSelection == JFileChooser.CANCEL_OPTION) {
@@ -908,28 +918,40 @@ public class GUI extends javax.swing.JFrame {
     private void Btn_decrypActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_decrypActionPerformed
         TXA_decryp_mess.setText("");
         LB_notify2.setText("");
-        if (sourceFilePath.equals("")) {
+        if (destFilePath.equals("")) {
             LB_notify2.setText("No File Selected");
             return;
         }
-        else if(TX_decryp_key.getText().equals("")){
-            LB_notify2.setText("Please input key");
-        }
+//        else if(TX_decryp_key.getText().equals("")){
+//            LB_notify2.setText("Please input key");
+//        }
         else {
-            String secKey=TX_decryp_key.getText();
-            String secret = s.Decode(sourceFilePath);
-            byte[] decodedHex = aes.hextoBytes(secret);
-            SecretKey originalKey;
-            try {
-                originalKey = aes.getSecretDecryptionKey(secKey);
-                String decryptedText = aes.decryptText(decodedHex, originalKey);
+            //decrypt
+//            String secKey=TX_decryp_key.getText();
+            String secret = s.Decode(destFilePath);
+                    System.out.println("sec: "+secret);
+//            byte[] decodedHex = aes.hextoBytes(secret);
+//            SecretKey originalKey;
+//            try {
+//                originalKey = aes.getSecretDecryptionKey(secKey);
+//                String decryptedText = aes.decryptText(decodedHex, originalKey);
+                String key = TX_decryp_key.getText();
+                String decryptedText = myaes.decrypt(secret, key);
                 TXA_decryp_mess.setText(decryptedText); 
                 LB_notify2.setText("The secret was Decoding successfully");
-            } catch (Exception ex) {
-                LB_notify1.setText(ex.getMessage());
-            }
+//            } catch (Exception ex) {
+//                LB_notify2.setText("<html>"+ex.getMessage()+"<html>");
+//            }
         }
-
+//        else {
+//            String secret = s.Decode(sourceFilePath);
+//            try {
+//                TXA_decryp_mess.setText(secret); 
+//                LB_notify2.setText("The secret was Decoding successfully");
+//            } catch (Exception ex) {
+//                LB_notify2.setText("<html>"+ex.getMessage()+"<html>");
+//            }
+//        }
     }//GEN-LAST:event_Btn_decrypActionPerformed
     public int getMaxHiddenChars(int width, int height) {
 
