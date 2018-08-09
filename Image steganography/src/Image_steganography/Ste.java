@@ -35,11 +35,13 @@ public class Ste {
                 }
             }
             System.out.println("out file: " + output_path);
-
+            int add=0;
             String secret_bin = messtobin(secret) + "000000000"; //them 9bit 0 vao cuoi message de danh dau ket thuc
             while (secret_bin.length() % 9 != 0) { // dam bao moi lan du 3 bit cho RGB
-                secret_bin += "0";
+                secret_bin += "0"; 
+                add++;
             }
+            System.out.println("add: "+add);
             System.out.println("secret_bin: " + secret_bin);
             char[] binHidden = secret_bin.toCharArray(); //chuyen doi secret_bin thanh mang char binHidden
 
@@ -47,7 +49,7 @@ public class Ste {
             for (int x = 0; x < buff.getWidth(); x++) {
                 for (int y = 0; y < buff.getHeight(); y++) {
                     int rgb = buff.getRGB(x, y); //lay gia tri RGB tai toa do x,y  
-                    //o and may =0 // 1 or may =1
+                    //1 and may = chính nó va 0 and may =0 // 0 or may =chinh no va 1 or may =1
                     rgb = (binHidden[count++] == '0') ? (rgb & 0xFFFEFFFF) : (rgb | 0x00010000); //thay the gia tri LSB Red 
                     rgb = (binHidden[count++] == '0') ? (rgb & 0xFFFFFEFF) : (rgb | 0x00000100); //thay the gia tri LSB Green 
                     rgb = (binHidden[count++] == '0') ? (rgb & 0xFFFFFFFE) : (rgb | 0x00000001); //thay the gia tri LSB Blue 
@@ -72,7 +74,7 @@ public class Ste {
     }
     // Lay ra các bit LSB  da giau trong pixel trong anh
     public String getLSBBits(int pixel_rgb) { 
-        Color c = new Color(pixel_rgb);
+        Color c = new Color(pixel_rgb); //Tạo đối tượng Color từ một giá trị RGB
         String result = "";
         // toBinaryString(int value) của lớp Integer trong JAVA dùng để lấy chuỗi nhị phân từ biến value
         //vd toBinaryString(170) = 10101010
@@ -89,7 +91,7 @@ public class Ste {
     public String Decode(String image_path) {
         try {
             String secret_bin = ""; //chuoi binary thong diep da giau
-            boolean endfalg = false; 
+            boolean endflag = false; 
             int count = 0; //count de dem bit LSB da lay duoc
             int ktra9bit0 = 0;
             String secret="";
@@ -110,14 +112,14 @@ public class Ste {
                     }
                     if(count==9){
                         if (ktra9bit0 == 9) {
-                            endfalg = true;
+                            endflag = true;
                             break;
                         }
                         ktra9bit0 = 0;
                         count = 0;
                     }
                 }
-                if(endfalg) break;
+                if(endflag) break;
             }
             String mess = ""; //Thong diep
 //            System.out.println("s leng: "+secret_bin.length());

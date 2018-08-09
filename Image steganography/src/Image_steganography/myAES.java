@@ -25,7 +25,7 @@ public class myAES {
             key = myKey.getBytes("UTF-8");
             sha = MessageDigest.getInstance("SHA-1");
             key = sha.digest(key);
-            key = Arrays.copyOf(key, 16); //16/24/32 - 128/192/256
+            key = Arrays.copyOf(key, 32); //16/24/32 - 128/192/256
             secretKey = new SecretKeySpec(key, "AES");
         }
         catch (NoSuchAlgorithmException e) {
@@ -67,16 +67,16 @@ public class myAES {
         }
         return null;
     }
-    public static void main(String[] args)
-{
-    final String secretKey = "ssshhhhhhhhhhh!!!!";
-     
-    String originalString = "howtodoinjava.com";
-    String encryptedString = myAES.encrypt(originalString, secretKey) ;
-    String decryptedString = myAES.decrypt(encryptedString, secretKey) ;
-     
-    System.out.println(originalString);
-    System.out.println(encryptedString);
-    System.out.println(decryptedString);
-}
+//    public static void main(String[] args)
+//{
+//    final String secretKey = "ssshhhhhhhhhhh!!!!";
+//     
+//    String originalString = "howtodoinjava.com";
+//    String encryptedString = myAES.encrypt(originalString, secretKey) ;
+//    String decryptedString = myAES.decrypt(encryptedString, secretKey) ;
+//     
+//    System.out.println(originalString);
+//    System.out.println(encryptedString);
+//    System.out.println(decryptedString);
+//}
 }

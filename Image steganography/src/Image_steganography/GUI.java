@@ -34,9 +34,7 @@ public class GUI extends javax.swing.JFrame {
 
     private static String sourceFilePath = "";
     private static String destFilePath = "";
-    private static String fileName = "";
     private Ste s = new Ste();
-    private AES aes = new AES();
     private myAES myaes = new myAES();
 
     /**
@@ -140,18 +138,18 @@ public class GUI extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel10.setText("Choose Image: ");
+        jLabel10.setText("Chọn ảnh để giấu: ");
 
-        Btn_input_img.setText("Browse");
+        Btn_input_img.setText("Chọn");
         Btn_input_img.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_input_imgActionPerformed(evt);
             }
         });
 
-        jLabel11.setText("Choose message: ");
+        jLabel11.setText("Chọn tệp tin mật:");
 
-        Btn_input_mess.setText("Browse");
+        Btn_input_mess.setText("Chọn");
         Btn_input_mess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_input_messActionPerformed(evt);
@@ -162,23 +160,23 @@ public class GUI extends javax.swing.JFrame {
         TXA_input_mess.setRows(5);
         jScrollPane1.setViewportView(TXA_input_mess);
 
-        jLabel12.setText("Message: ");
+        jLabel12.setText("Tin mật:");
 
-        jLabel13.setText("Key : ");
+        jLabel13.setText("Khóa:");
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Image Detail"));
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin ảnh "));
 
         LB_origin_img1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel16.setText("Original image");
+        jLabel16.setText("Ảnh trước khi giấu tin");
 
         LB_enc_img1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel18.setText("Encrypted image");
+        jLabel18.setText("Ảnh sau khi giấu tin");
 
-        LB_origin_img_size1.setText("Size: ");
+        LB_origin_img_size1.setText("Kích thước: ");
 
-        LB_enc_img_size1.setText("Size: ");
+        LB_enc_img_size1.setText("Kích thước: ");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -194,14 +192,14 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel16)
-                        .addGap(81, 81, 81)
+                        .addGap(60, 60, 60)
                         .addComponent(LB_origin_img_size1))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jLabel18)
-                        .addGap(65, 65, 65)
+                        .addGap(73, 73, 73)
                         .addComponent(LB_enc_img_size1)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,17 +211,15 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(jLabel16)
                     .addComponent(LB_origin_img_size1))
                 .addGap(10, 10, 10)
-                .addComponent(LB_enc_img1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(LB_enc_img1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(LB_enc_img_size1))
                 .addContainerGap())
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("NOTIFICATION"));
-
-        LB_notify1.setText("notify");
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông báo"));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -242,43 +238,42 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        Btn_exit1.setText("Exit");
+        Btn_exit1.setText("Thoát");
         Btn_exit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_exit1ActionPerformed(evt);
             }
         });
 
-        Btn_clear1.setText("Clear");
+        Btn_clear1.setText("Làm mới");
         Btn_clear1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_clear1ActionPerformed(evt);
             }
         });
 
-        Btn_enc.setText("Encryption");
+        Btn_enc.setText("Giấu tin");
         Btn_enc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_encActionPerformed(evt);
             }
         });
 
-        jLabel14.setText("Output Image: ");
+        jLabel14.setText("Chọn ảnh đầu ra:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
+                                .addContainerGap()
                                 .addComponent(jLabel14)
-                                .addGap(211, 211, 211))
-                            .addComponent(TX_output_img, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TX_output_img, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -287,6 +282,7 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(Btn_enc)
                         .addGap(24, 24, 24))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -308,8 +304,8 @@ public class GUI extends javax.swing.JFrame {
                                 .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
-                                .addComponent(Btn_clear1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66)
+                                .addComponent(Btn_clear1)
+                                .addGap(72, 72, 72)
                                 .addComponent(Btn_exit1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(25, 25, 25)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -354,30 +350,28 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("EnCryption", jPanel1);
+        jTabbedPane1.addTab("Giấu tin", jPanel1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel19.setText("Choose Image: ");
+        jLabel19.setText("Chọn ảnh để lấy tin:");
 
-        Btn_decryp_img.setText("Browse");
+        Btn_decryp_img.setText("Chọn");
         Btn_decryp_img.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_decryp_imgActionPerformed(evt);
             }
         });
 
-        jLabel20.setText("Message: ");
+        jLabel20.setText("Tin mật:");
 
         TXA_decryp_mess.setColumns(20);
         TXA_decryp_mess.setRows(5);
         jScrollPane2.setViewportView(TXA_decryp_mess);
 
-        jLabel21.setText("Key : ");
+        jLabel21.setText("Khóa:");
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("NOTIFICATION"));
-
-        LB_notify2.setText("notify");
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông báo"));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -396,13 +390,13 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Image Detail"));
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin ảnh"));
 
         LB_enc_img2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel25.setText("Encrypted image");
+        jLabel25.setText("Ảnh đã giấu tin");
 
-        LB_enc_img_size2.setText("Size: ");
+        LB_enc_img_size2.setText("Kích thước:");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -416,15 +410,15 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(jLabel25)
-                        .addGap(73, 73, 73)
+                        .addGap(56, 56, 56)
                         .addComponent(LB_enc_img_size2)))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LB_enc_img2, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addComponent(LB_enc_img2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
@@ -432,28 +426,28 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        Btn_exit2.setText("Exit");
+        Btn_exit2.setText("Thoát");
         Btn_exit2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_exit2ActionPerformed(evt);
             }
         });
 
-        Btn_decryp.setText("Decryption");
+        Btn_decryp.setText("Lấy tin");
         Btn_decryp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_decrypActionPerformed(evt);
             }
         });
 
-        Btn_clear2.setText("Clear");
+        Btn_clear2.setText("Làm mới");
         Btn_clear2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_clear2ActionPerformed(evt);
             }
         });
 
-        Btb_save_mess.setText("Save Message");
+        Btb_save_mess.setText("Lưu tin mật vào tệp");
         Btb_save_mess.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btb_save_messActionPerformed(evt);
@@ -470,7 +464,7 @@ public class GUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(15, Short.MAX_VALUE)
+                        .addContainerGap(17, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -489,7 +483,7 @@ public class GUI extends javax.swing.JFrame {
                                 .addComponent(Btb_save_mess)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(jLabel20)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
@@ -533,7 +527,7 @@ public class GUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Decryption", jPanel2);
+        jTabbedPane1.addTab("Lấy tin", jPanel2);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -571,7 +565,7 @@ public class GUI extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(0, 51, 255));
         jLabel9.setText("Lớp: D14CAQT01-N");
 
-        Btn_exit3.setText("Exit");
+        Btn_exit3.setText("Thoát");
         Btn_exit3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_exit3ActionPerformed(evt);
@@ -646,7 +640,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(31, 31, 31))
         );
 
-        jTabbedPane1.addTab("About", jPanel3);
+        jTabbedPane1.addTab("Tác giả", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -671,8 +665,8 @@ public class GUI extends javax.swing.JFrame {
     private void Btn_input_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_input_imgActionPerformed
         JFileChooser file = new JFileChooser(".");
         file.setAcceptAllFileFilterUsed(false);
-        file.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        file.setDialogTitle("Select Image To Encrypt");
+        file.setCurrentDirectory(new File(System.getProperty("user.dir"))); //chỉ về mục hiện hành
+        file.setDialogTitle("Chọn ảnh để giấu tin");
         //loc file chi lay dinh dang bmp hoac png
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images (bmp, png)", "bmp", "png");
         file.addChoosableFileFilter(filter);
@@ -687,7 +681,7 @@ public class GUI extends javax.swing.JFrame {
                 BufferedImage resizedImage = resize(image, LB_origin_img1.getWidth(), LB_origin_img1.getHeight());
                 LB_origin_img1.setIcon(new ImageIcon(resizedImage));
                 TX_input_img.setText(path);
-                LB_origin_img_size1.setText("Size: " + selectedFile.length() / 1000 + " KB");
+                LB_origin_img_size1.setText("Kích thước: " + selectedFile.length() / 1000 + " KB");
             } catch (IOException ex) {
                 LB_notify1.setText("<html>"+ex.getMessage()+"<html>");
             }
@@ -700,8 +694,8 @@ public class GUI extends javax.swing.JFrame {
     private void Btn_decryp_imgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_decryp_imgActionPerformed
         JFileChooser file = new JFileChooser();
         file.setAcceptAllFileFilterUsed(false);
-        file.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        file.setDialogTitle("Select Image To Decrypt");
+        file.setCurrentDirectory(new File(System.getProperty("user.dir")));//chỉ về mục hiện hành
+        file.setDialogTitle("Chọn ảnh để lấy tin");
         //loc file chi lay dinh dang bmp hoac png
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images (bmp, png)", "bmp", "png");
         file.addChoosableFileFilter(filter);
@@ -713,10 +707,11 @@ public class GUI extends javax.swing.JFrame {
             destFilePath = path;
             try {
                 BufferedImage image = ImageIO.read(selectedFile);
+//                BufferedImage image = ImageIO.read(new File(destFilePath));
                 BufferedImage resizedImage = resize(image, LB_enc_img2.getWidth(), LB_enc_img2.getHeight());
                 LB_enc_img2.setIcon(new ImageIcon(resizedImage));
                 TX_decryp_img.setText(path);
-                LB_enc_img_size2.setText("Size: " + selectedFile.length() / 1000 + " KB");
+                LB_enc_img_size2.setText("Kích thước: " + selectedFile.length() / 1000 + " KB");
             } catch (IOException ex) {
 //                showMessage(ex.getMessage(), "ERROR!!!");
                 LB_notify2.setText("<html>"+ex.getMessage()+"<html>");
@@ -730,8 +725,8 @@ public class GUI extends javax.swing.JFrame {
     private void Btn_input_messActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_input_messActionPerformed
         JFileChooser file = new JFileChooser();
         file.setAcceptAllFileFilterUsed(false);
-        file.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        file.setDialogTitle("Select Message text To Encrypt");
+        file.setCurrentDirectory(new File(System.getProperty("user.dir")));//chỉ về mục hiện hành
+        file.setDialogTitle("Chọn tệp tin mật");
         //loc file chi lay dinh dang txt
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text (txt)", "txt");
         file.addChoosableFileFilter(filter);
@@ -773,8 +768,8 @@ public class GUI extends javax.swing.JFrame {
         LB_notify1.setText("");
         LB_origin_img1.setIcon(null);
         LB_enc_img1.setIcon(null);
-        LB_origin_img_size1.setText("Size: ");
-        LB_enc_img_size1.setText("Size: ");
+        LB_origin_img_size1.setText("Kích thước: ");
+        LB_enc_img_size1.setText("Kích thước: ");
         sourceFilePath = "";
     }//GEN-LAST:event_Btn_clear1ActionPerformed
 
@@ -783,7 +778,7 @@ public class GUI extends javax.swing.JFrame {
         TXA_decryp_mess.setText("");
         TX_decryp_key.setText("");
         LB_notify2.setText("");
-        LB_enc_img_size2.setText("Size: ");
+        LB_enc_img_size2.setText("Kích thước: ");
         LB_enc_img2.setIcon(null);
         destFilePath = "";
     }//GEN-LAST:event_Btn_clear2ActionPerformed
@@ -793,9 +788,9 @@ public class GUI extends javax.swing.JFrame {
         JFileChooser file = new JFileChooser();
         file.setAcceptAllFileFilterUsed(false);
         file.setCurrentDirectory(new File(System.getProperty("user.dir")));
-        file.setDialogTitle("Select file to save Message text");
+        file.setDialogTitle("Lưu tệp tin mật");
         //loc file chi lay dinh dang txt
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text (txt)", "txt");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text (txt)", "txt");//chỉ về mục hiện hành
         file.addChoosableFileFilter(filter);
         int result = file.showSaveDialog(null);
         //neu nguoi dung nhan nut save tren dialog
@@ -829,22 +824,27 @@ public class GUI extends javax.swing.JFrame {
 
     private void Btn_encActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_encActionPerformed
         if (sourceFilePath.equals("")) {
-            LB_notify1.setText("No image file selected");
+            LB_notify1.setText("Vui lòng chọn ảnh để giấu tin");
             return;
         }
         //lay thong diep tù nguoi dung
         String secret = TXA_input_mess.getText().trim();
         if (secret.equals("")) {
-            LB_notify1.setText("Please input something to hide");
+            LB_notify1.setText("Vui lòng nhập tin mật cần giấu");
+            return;
+        }
+        // kiem tra co khoa khong
+        if (TX_input_key.getText().equals("")) {
+            LB_notify1.setText("Vui lòng nhập khóa");
             return;
         }
         System.out.println("LENG: " + secret.length() * 8 + " bits");
         //xac dinh toi da cac ky tu co the giau tren anh dua vao chiều rộng và chiều cao của hình ảnh
         try {
             BufferedImage bi = ImageIO.read(new File(sourceFilePath));
-            int maxChars = getMaxHiddenChars(bi.getWidth(), bi.getHeight());
-            if ((secret.length() * 8) > (maxChars) - 3) {
-                LB_notify1.setText("The maximum character to hide is " + maxChars);
+            int maxChars = bi.getWidth()* bi.getHeight()*3;
+            if ((secret.length() * 8) > (maxChars) - 2) {
+                LB_notify1.setText("Số ký tự tối đa có thể giấu được " + maxChars);
                 return;
             } else {
                 LB_notify1.setText("");
@@ -855,56 +855,46 @@ public class GUI extends javax.swing.JFrame {
         }
         //chon file save
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Specify a file to save encryted image");
+        fileChooser.setDialogTitle("Lưu ảnh đã giấu tin");
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-
+        //loc lấy đuôi ảnh cần giấu tin, chỉ cho phép save với định dạng này
         String ext = sourceFilePath.substring(sourceFilePath.lastIndexOf('.') + 1);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images ", ext);
         fileChooser.addChoosableFileFilter(filter);
 
         int userSelection = fileChooser.showSaveDialog(this);
-        String destFilePath = "";
+//        String destFilePath = "";
         //neu nguoi dung nhan nut save tren dialog
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
-            destFilePath = fileToSave.getAbsolutePath();
+            String destFilePath = fileToSave.getAbsolutePath();
             try {
-                // encrypt 
-//                String secKey = aes.getSecretEncryptionKey();
-//                SecretKey originalKey = aes.getSecretDecryptionKey(secKey);
-//                byte[] cipherText = aes.encryptText(secret, originalKey);
-//                TX_input_key.setText(secKey);
+                // mã hóa tin mật 
                 String key = TX_input_key.getText();
                 String newmess = myaes.encrypt(secret, key);
                 System.out.println("newmess: "+newmess);
-                //encode here
+                //Giấu tin
                 if (s.Encode(sourceFilePath, newmess, destFilePath)) {
-//                if (s.Encode(sourceFilePath, aes.bytesToHex(cipherText), destFilePath)) {
 //                if (s.Encode(sourceFilePath, secret, destFilePath)) {
-//                    try {
-                        File newfile;
-                        String fileType = "." + ext;
-                        System.out.println("fileType: " + fileType);
-                        if (!destFilePath.endsWith(fileType)) {
-                            if (destFilePath.indexOf(".") != -1) {
-                                destFilePath = destFilePath.substring(0, destFilePath.lastIndexOf('.'));
-                            }
-                            newfile = new File(destFilePath + fileType);
-                            TX_output_img.setText(destFilePath + fileType);
-                        } else {
-                            newfile = new File(destFilePath);
-                            TX_output_img.setText(destFilePath);
+                    File newfile;
+                    String fileType = "." + ext;
+                    System.out.println("fileType: " + fileType);
+                    if (!destFilePath.endsWith(fileType)) {
+                        if (destFilePath.indexOf(".") != -1) {
+                            destFilePath = destFilePath.substring(0, destFilePath.lastIndexOf('.'));
                         }
-                        // set lai encrypted image 
-                        BufferedImage image = ImageIO.read(newfile);
-                        BufferedImage resizedImage = resize(image, LB_enc_img1.getWidth(), LB_enc_img1.getHeight());
-                        LB_enc_img1.setIcon(new ImageIcon(resizedImage));
-                        LB_enc_img_size1.setText("Size: " + newfile.length() / 1000 + " KB");
-//                    } catch (IOException ex) {
-//                        LB_notify1.setText("<html>"+ex.getMessage()+"<html>");
-//                    }
-                    LB_notify1.setText("The secret was encoding successfully");
+                        newfile = new File(destFilePath + fileType);
+                        TX_output_img.setText(destFilePath + fileType);
+                    } else {
+                        newfile = new File(destFilePath);
+                        TX_output_img.setText(destFilePath);
+                    }
+                    BufferedImage image = ImageIO.read(newfile);
+                    BufferedImage resizedImage = resize(image, LB_enc_img1.getWidth(), LB_enc_img1.getHeight());
+                    LB_enc_img1.setIcon(new ImageIcon(resizedImage));
+                    LB_enc_img_size1.setText("Kích thước: " + newfile.length() / 1000 + " KB");
+                    LB_notify1.setText("Giấu tin mật thành công");
                 }
             } catch (Exception ex) {
                 LB_notify1.setText("<html>"+ex.getMessage()+"<html>");
@@ -919,44 +909,37 @@ public class GUI extends javax.swing.JFrame {
         TXA_decryp_mess.setText("");
         LB_notify2.setText("");
         if (destFilePath.equals("")) {
-            LB_notify2.setText("No File Selected");
+            LB_notify2.setText("Vui lòng chọn ảnh để lấy tin");
             return;
         }
-//        else if(TX_decryp_key.getText().equals("")){
-//            LB_notify2.setText("Please input key");
-//        }
-        else {
-            //decrypt
-//            String secKey=TX_decryp_key.getText();
-            String secret = s.Decode(destFilePath);
-                    System.out.println("sec: "+secret);
-//            byte[] decodedHex = aes.hextoBytes(secret);
-//            SecretKey originalKey;
-//            try {
-//                originalKey = aes.getSecretDecryptionKey(secKey);
-//                String decryptedText = aes.decryptText(decodedHex, originalKey);
-                String key = TX_decryp_key.getText();
-                String decryptedText = myaes.decrypt(secret, key);
-                TXA_decryp_mess.setText(decryptedText); 
-                LB_notify2.setText("The secret was Decoding successfully");
-//            } catch (Exception ex) {
-//                LB_notify2.setText("<html>"+ex.getMessage()+"<html>");
-//            }
+        else if(TX_decryp_key.getText().equals("")){
+            LB_notify2.setText("Vui lòng nhập khóa");
         }
-//        else {
-//            String secret = s.Decode(sourceFilePath);
-//            try {
-//                TXA_decryp_mess.setText(secret); 
-//                LB_notify2.setText("The secret was Decoding successfully");
-//            } catch (Exception ex) {
-//                LB_notify2.setText("<html>"+ex.getMessage()+"<html>");
-//            }
-//        }
+        else {
+            try {
+            //Lấy tin
+            String secret = s.Decode(destFilePath);
+            //Giải mã tin mật
+            String key = TX_decryp_key.getText();
+            String decryptedText = myaes.decrypt(secret, key);
+            TXA_decryp_mess.setText(decryptedText); 
+            File f = new File(destFilePath);
+            BufferedImage image = ImageIO.read(f);
+            BufferedImage resizedImage = resize(image, LB_enc_img2.getWidth(), LB_enc_img2.getHeight());
+            LB_enc_img2.setIcon(new ImageIcon(resizedImage));
+            TX_decryp_img.setText(destFilePath);
+            LB_enc_img_size2.setText("Kích thước: " + f.length() / 1000 + " KB");
+            if(TXA_decryp_mess.getText().equals("")) LB_notify2.setText("Ảnh không có tin hoặc sai khóa");     
+            else LB_notify2.setText("Lấy tin mật thành công");
+            } catch (IOException ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_Btn_decrypActionPerformed
-    public int getMaxHiddenChars(int width, int height) {
-
-        return (width * height * 3); //*3 RGB hide in 1 lsb bit
-    }
+//    public int getMaxHiddenChars(int width, int height) {
+//
+//        return (width * height * 3); //*3 RGB hide in 1 lsb bit
+//    }
 
     /**
      * @param args the command line arguments
