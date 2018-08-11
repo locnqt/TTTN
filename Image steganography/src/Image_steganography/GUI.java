@@ -838,13 +838,17 @@ public class GUI extends javax.swing.JFrame {
             LB_notify1.setText("Vui lòng nhập khóa");
             return;
         }
-        System.out.println("LENG: " + secret.length() * 8 + " bits");
-        //xac dinh toi da cac ky tu co the giau tren anh dua vao chiều rộng và chiều cao của hình ảnh
+        // mã hóa tin mật 
+        String key = TX_input_key.getText();
+        String newmess = myaes.encrypt(secret, key);
+        System.out.println("newmess: "+newmess);
+        System.out.println("LENG: " + newmess.length() + " ky tu"); //15-24 30-44 45-64
+        //kiem tra cac ky tu co the giau tren anh dua vao chiều rộng và chiều cao của hình ảnh
         try {
             BufferedImage bi = ImageIO.read(new File(sourceFilePath));
             int maxChars = bi.getWidth()* bi.getHeight()*3;
-            if ((secret.length() * 8) > (maxChars) - 2) {
-                LB_notify1.setText("Số ký tự tối đa có thể giấu được " + maxChars);
+            if (newmess.length() > ((maxChars)/8 - 2)) {
+                LB_notify1.setText("Số ký tự quá nhiều đểđược ");
                 return;
             } else {
                 LB_notify1.setText("");
@@ -870,10 +874,6 @@ public class GUI extends javax.swing.JFrame {
             File fileToSave = fileChooser.getSelectedFile();
             String destFilePath = fileToSave.getAbsolutePath();
             try {
-                // mã hóa tin mật 
-                String key = TX_input_key.getText();
-                String newmess = myaes.encrypt(secret, key);
-                System.out.println("newmess: "+newmess);
                 //Giấu tin
                 if (s.Encode(sourceFilePath, newmess, destFilePath)) {
 //                if (s.Encode(sourceFilePath, secret, destFilePath)) {
